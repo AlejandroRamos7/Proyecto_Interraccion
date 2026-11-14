@@ -5,11 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.VideoView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class Pantalla_inicio extends AppCompatActivity {
+public class Pantalla_inicio extends BaseActivity {
 
     private VideoView video;
+    private boolean yaNavego = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +31,9 @@ public class Pantalla_inicio extends AppCompatActivity {
     }
 
     private void irAlInicio() {
+        if (yaNavego) return;
+        yaNavego = true;
         startActivity(new Intent(Pantalla_inicio.this, MainActivity.class));
         finish();
     }
-
 }

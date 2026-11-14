@@ -1,63 +1,44 @@
 package com.example.proyecto_interaccion;
 
-import static com.example.proyecto_interaccion.R.*;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+public class Inicio extends BaseActivity {
 
-public class Inicio extends AppCompatActivity implements View.OnClickListener{
-
-    private Button b1;
-    private Button b2;
-    private Button b3;
-
-
+    private TextView txtTitulo, txtDetalle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.inicio);
+        setContentView(R.layout.inicio);
 
-        b1 = (Button) findViewById(id.button2);
-        b1.setOnClickListener(this);
+        txtTitulo = findViewById(R.id.txtProximaTitulo);
+        txtDetalle = findViewById(R.id.txtProximaDetalle);
 
-        b2 = (Button) findViewById(id.button3);
-        b2.setOnClickListener(this);
-
-        b3 = (Button) findViewById(id.button4);
-        b3.setOnClickListener(this);
-
+        findViewById(R.id.cardProxima).setOnClickListener(v -> abrir(Agenda.class));
+        findViewById(R.id.cardAgenda).setOnClickListener(v -> abrir(Agenda.class));
+        findViewById(R.id.cardTraductor).setOnClickListener(v -> abrir(Traductor.class));
+        findViewById(R.id.cardFamilia).setOnClickListener(v -> abrir(Familia.class));
+        findViewById(R.id.cardEvaluacion).setOnClickListener(v -> abrir(Evaluacion.class));
     }
 
     @Override
-    public void onClick(View v) {
+    protected void onResume() {
+        super.onResume();
+        Almacen.Cita c = Almacen.proximaCita(this);
+        if (c == null) {
+            txtTitulo.setText("Sin citas próximas");
+            txtDetalle.setText("Toca aquí para agendar una cita y activar su recordatorio.");
+        } else {
+            txtTitulo.setText(c.motivo);
+            String quien = Almacen.nombrePaciente(this, c.pacienteId);
+            txtDetalle.setText(quien + " · " + Util.fecha(c.fechaHora, "EEEE d 'de' MMMM, HH:mm")
+                    + (c.lugar.isEmpty() ? "" : "\n" + c.lugar));
+        }
+    }
 
-        int botoncito = v.getId();
-
-        if(botoncito == R.id.button2){
-            Toast.makeText(this, "Entrando a agenda", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Inicio.this,Agenda.class);
-            startActivity(intent); }
-
-        if(botoncito == R.id.button3){
-            Toast.makeText(this, "Entrando a Traductor", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Inicio.this,Traductor.class);
-            startActivity(intent); }
-
-        if(botoncito == R.id.button4){
-            Toast.makeText(this, "Entrando a Registro familiar", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Inicio.this,Familia.class);
-            startActivity(intent); }
-
-
+    private void abrir(Class<?> destino) {
+        startActivity(new Intent(this, destino));
     }
 }

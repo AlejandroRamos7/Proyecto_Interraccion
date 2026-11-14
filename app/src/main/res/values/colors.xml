@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta azul / negro -->
+    <color name="negro">#FF05070D</color>
+    <color name="superficie">#FF0D1526</color>
+    <color name="superficie2">#FF14213D</color>
+    <color name="borde">#FF1F3158</color>
+    <color name="azul">#FF2F7BFF</color>
+    <color name="azul_claro">#FF6FAEFF</color>
+    <color name="azul_oscuro">#FF0F2C6B</color>
+    <color name="cian">#FF3ED8E7</color>
+    <color name="texto">#FFEAF1FF</color>
+    <color name="texto_suave">#FF93A6CC</color>
+
+    <!-- Estados de resultados -->
+    <color name="verde">#FF3DDC97</color>
+    <color name="ambar">#FFFFB454</color>
+    <color name="rojo">#FFFF6B7A</color>
 </resources>
