@@ -13,7 +13,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-/** Base común: pantalla completa con barras oscuras, márgenes seguros y cabecera estándar. */
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -38,7 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    /** Rellena la cabecera (view_header) y activa el botón de volver. */
     protected void configurarHeader(String titulo, String subtitulo) {
         ((TextView) findViewById(R.id.txtTitulo)).setText(titulo);
         ((TextView) findViewById(R.id.txtSubtitulo)).setText(subtitulo);

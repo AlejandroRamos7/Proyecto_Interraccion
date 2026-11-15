@@ -32,16 +32,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/** Gestión centralizada de citas médicas con recordatorios. */
 public class Agenda extends BaseActivity {
 
     private LinearLayout lista;
     private View vacio;
 
     private final ActivityResultLauncher<String> permisoNotificaciones =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), concedido -> {
-                if (!concedido) {
-                    Toast.makeText(this, "Sin permiso de notificaciones no podremos recordarte tus citas.",
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), aceptado -> {
+                if (!aceptado) {
+                    Toast.makeText(this, "Sin permiso, no se podra enviar notificaciones",
                             Toast.LENGTH_LONG).show();
                 }
             });
@@ -69,7 +68,6 @@ public class Agenda extends BaseActivity {
         pintar();
     }
 
-    // ------------------------------------------------------------- listado
     private void pintar() {
         lista.removeAllViews();
         List<Almacen.Cita> todas = Almacen.citas(this);
@@ -132,13 +130,12 @@ public class Agenda extends BaseActivity {
         return v;
     }
 
-    // ------------------------------------------------------------ nueva cita
     private void nuevaCita() {
         List<Almacen.Paciente> pacientes = Almacen.pacientes(this);
         if (pacientes.isEmpty()) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Primero registra a una persona")
-                    .setMessage("Agrega a la persona que cuidas para poder asignarle citas.")
+                    .setMessage("Agrega a la persona que cuidas para poder asignarle citas")
                     .setPositiveButton("Ir a Familia", (d, w) -> startActivity(new Intent(this, Familia.class)))
                     .setNegativeButton("Ahora no", null)
                     .show();
@@ -156,9 +153,9 @@ public class Agenda extends BaseActivity {
         EditText etNotas = v.findViewById(R.id.etNotas);
 
         final int[] pacienteSel = {0};
-        final int[] recSel = {2}; // 1 hora antes
-        final int[] fecha = {-1, -1, -1}; // año, mes, día
-        final int[] hora = {-1, -1};       // hora, minuto
+        final int[] recSel = {2};
+        final int[] fecha = {-1, -1, -1};
+        final int[] hora = {-1, -1};
 
         List<String> nombres = new ArrayList<>();
         for (Almacen.Paciente p : pacientes) nombres.add(p.nombre);

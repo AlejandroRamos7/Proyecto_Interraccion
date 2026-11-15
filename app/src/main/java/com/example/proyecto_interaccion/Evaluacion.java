@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Evaluación de usabilidad para la cohorte piloto: escala SUS (System Usability Scale,
- * 10 ítems) + 2 ítems propios sobre la traducción de resultados y los recordatorios.
- */
 public class Evaluacion extends BaseActivity {
 
     private static final String[] PREGUNTAS = {
@@ -30,7 +26,7 @@ public class Evaluacion extends BaseActivity {
             "Encontré la aplicación muy incómoda de usar.",
             "Me sentí muy seguro/a al usar la aplicación.",
             "Necesité aprender muchas cosas antes de poder empezar a usar la aplicación.",
-            // Ítems adicionales (no entran al puntaje SUS)
+
             "[Adicional] La explicación de los resultados clínicos fue clara y fácil de entender.",
             "[Adicional] Los recordatorios de citas me ayudarían a no olvidar mis citas médicas."
     };
@@ -90,7 +86,6 @@ public class Evaluacion extends BaseActivity {
             return;
         }
 
-        // SUS: ítems impares (1,3,5,7,9) = respuesta-1; pares = 5-respuesta; suma × 2.5
         int suma = 0;
         for (int i = 0; i < 10; i++) suma += (i % 2 == 0) ? r[i] - 1 : 5 - r[i];
         double sus = suma * 2.5;
@@ -109,7 +104,6 @@ public class Evaluacion extends BaseActivity {
         actualizarCohorte();
         scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
 
-        // Limpia el formulario para el siguiente participante
         for (RadioGroup g : grupos) g.clearCheck();
         etParticipante.setText("");
     }

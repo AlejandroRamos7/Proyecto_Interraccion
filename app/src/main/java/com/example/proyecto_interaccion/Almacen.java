@@ -11,22 +11,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-/**
- * Almacenamiento local (SharedPreferences + JSON). Los datos de salud NO salen del
- * dispositivo, salvo el texto/foto que el usuario decide enviar al traductor de IA.
- */
 public final class Almacen {
     private Almacen() {}
 
-    private static final String PREFS = "cuidasalud_datos";
+    private static final String PREFS = "Notisalud_datos";
     private static final String K_PACIENTES = "pacientes";
     private static final String K_CITAS = "citas";
     private static final String K_ANALISIS = "analisis";
     private static final String K_EVALUACIONES = "evaluaciones";
     private static final int MAX_ANALISIS = 30;
 
-    // ---------------------------------------------------------------- modelos
     public static class Paciente {
         public String id = UUID.randomUUID().toString();
         public String nombre = "", parentesco = "", condiciones = "", notas = "";
@@ -108,7 +102,6 @@ public final class Almacen {
         }
     }
 
-    /** Respuestas de la escala SUS (10 ítems) + 2 ítems adicionales propios del proyecto. */
     public static class Evaluacion {
         public String id = UUID.randomUUID().toString();
         public String participante = "";
@@ -139,7 +132,6 @@ public final class Almacen {
         }
     }
 
-    // --------------------------------------------------------------- helpers
     private static SharedPreferences prefs(Context c) {
         return c.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
@@ -156,7 +148,6 @@ public final class Almacen {
         prefs(c).edit().putString(clave, a.toString()).apply();
     }
 
-    // -------------------------------------------------------------- pacientes
     public static List<Paciente> pacientes(Context c) {
         List<Paciente> l = new ArrayList<>();
         JSONArray a = leer(c, K_PACIENTES);
@@ -179,7 +170,6 @@ public final class Almacen {
         escribir(c, K_PACIENTES, a);
     }
 
-    /** Elimina al paciente junto con sus citas (y recordatorios) y sus análisis. */
     public static void eliminarPaciente(Context c, String id) {
         JSONArray a = new JSONArray();
         for (Paciente p : pacientes(c)) if (!p.id.equals(id)) a.put(p.toJson());
@@ -201,8 +191,6 @@ public final class Almacen {
         return "Sin asignar";
     }
 
-    // ------------------------------------------------------------------ citas
-    /** Todas las citas, ordenadas de la más cercana a la más lejana. */
     public static List<Cita> citas(Context c) {
         List<Cita> l = new ArrayList<>();
         JSONArray a = leer(c, K_CITAS);
@@ -245,8 +233,6 @@ public final class Almacen {
         return n;
     }
 
-    // --------------------------------------------------------------- análisis
-    /** Historial de análisis traducidos, del más reciente al más antiguo. */
     public static List<Analisis> analisis(Context c) {
         List<Analisis> l = new ArrayList<>();
         JSONArray a = leer(c, K_ANALISIS);
@@ -272,7 +258,6 @@ public final class Almacen {
         return n;
     }
 
-    // ------------------------------------------------------------ evaluaciones
     public static List<Evaluacion> evaluaciones(Context c) {
         List<Evaluacion> l = new ArrayList<>();
         JSONArray a = leer(c, K_EVALUACIONES);

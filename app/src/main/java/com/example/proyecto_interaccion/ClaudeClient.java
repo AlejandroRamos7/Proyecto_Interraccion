@@ -10,21 +10,13 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
-/**
- * Cliente mínimo de la API de Claude (Anthropic Messages API) para el módulo de
- * simplificación lingüística de resultados clínicos (PLN).
- *
- * IMPORTANTE: la clave se compila dentro de la app (local.properties → BuildConfig).
- * Es aceptable para la cohorte piloto; para producción debe moverse a un backend
- * propio que guarde la clave y reenvíe la petición.
- */
 public final class ClaudeClient {
     private ClaudeClient() {}
 
     public static final String ERROR_SIN_CLAVE = "SIN_CLAVE";
     private static final String URL_API = "https://api.anthropic.com/v1/messages";
 
+    /** Promt para que la IA no haga sus dagas*/
     private static final String SISTEMA =
             "Eres un asistente que traduce resultados de análisis clínicos (laboratorio, imagen, "
             + "informes médicos) a lenguaje claro para cuidadores sin formación médica, en español de México.\n\n"
@@ -50,7 +42,6 @@ public final class ClaudeClient {
             + " \"preguntas_medico\": [\"...\"],\n"
             + " \"senales_de_alerta\": \"texto o cadena vacía\"}";
 
-    /** Devuelve el texto de respuesta del modelo (JSON como cadena). Debe llamarse fuera del hilo principal. */
     public static String traducir(String texto, String imagenBase64Jpeg, boolean sencillo) throws Exception {
         if (BuildConfig.ANTHROPIC_API_KEY.isEmpty()) throw new IllegalStateException(ERROR_SIN_CLAVE);
 

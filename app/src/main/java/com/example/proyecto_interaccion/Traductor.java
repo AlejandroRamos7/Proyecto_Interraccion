@@ -34,16 +34,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Módulo de simplificación lingüística de resultados clínicos con IA (PLN).
- * Entrada: texto pegado y/o foto del análisis. Salida: explicación en lenguaje claro,
- * semáforo por valor, preguntas para el médico y señales de alerta. No diagnostica.
- */
 public class Traductor extends BaseActivity {
 
     private static final String AVISO =
-            "Esta explicación la genera una IA como apoyo informativo. No es un diagnóstico ni sustituye "
-                    + "la opinión de tu médico. Ante cualquier duda o síntoma, consúltalo.";
+            "Esta explicación la genera una IA como apoyo informativo. No es un diagnóstico ni sustituye la opinión de tu médico. Ante cualquier duda o síntoma, consúltalo.";
 
     private final ExecutorService hilo = Executors.newSingleThreadExecutor();
     private final ActivityResultLauncher<String> selectorImagen =
@@ -96,7 +90,6 @@ public class Traductor extends BaseActivity {
         hilo.shutdownNow();
     }
 
-    // ----------------------------------------------------------------- imagen
     private void cargarImagen(Uri uri) {
         hilo.execute(() -> {
             try {
@@ -130,7 +123,6 @@ public class Traductor extends BaseActivity {
         filaImagen.setVisibility(View.GONE);
     }
 
-    // --------------------------------------------------------------- llamada IA
     private void traducir() {
         final String texto = etResultados.getText().toString().trim();
         final String imagen = imagenB64;
@@ -195,7 +187,6 @@ public class Traductor extends BaseActivity {
         mostrarResultado(json);
     }
 
-    // ---------------------------------------------------------------- resultado
     private void mostrarResultado(JSONObject o) {
         ultimo = o;
         contResultado.removeAllViews();
@@ -302,7 +293,6 @@ public class Traductor extends BaseActivity {
         startActivity(Intent.createChooser(i, "Compartir explicación"));
     }
 
-    // ---------------------------------------------------------------- historial
     private void verHistorial() {
         List<Almacen.Analisis> lista = Almacen.analisis(this);
         if (lista.isEmpty()) {

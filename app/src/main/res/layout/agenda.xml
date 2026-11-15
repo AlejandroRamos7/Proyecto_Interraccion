@@ -33,7 +33,7 @@
                     android:layout_marginTop="48dp"
                     android:gravity="center"
                     android:lineSpacingExtra="4dp"
-                    android:text="Aún no hay citas.\nToca “Nueva cita” para agendar la primera y recibir un recordatorio."
+                    android:text="Aún no hay citas.\nToca “Nueva cita” para agendar la primera y recibir un recordatorio cuando se requerido."
                     android:textSize="15sp" />
 
                 <LinearLayout

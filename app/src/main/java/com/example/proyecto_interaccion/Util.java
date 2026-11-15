@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.IntConsumer;
 
-/** Utilidades compartidas. */
 public final class Util {
     private Util() {}
 
@@ -29,7 +28,6 @@ public final class Util {
         return minutos + " min antes";
     }
 
-    /** Configura un campo desplegable (menú) con una lista de opciones. */
     public static void dropdown(Context c, AutoCompleteTextView v, List<String> items, int inicial, IntConsumer alElegir) {
         v.setAdapter(new ArrayAdapter<>(c, android.R.layout.simple_list_item_1, items));
         if (!items.isEmpty()) v.setText(items.get(inicial), false);

@@ -14,7 +14,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
-/** Registro de las personas que el cuidador atiende. */
 public class Familia extends BaseActivity {
 
     private LinearLayout lista;
@@ -63,9 +62,7 @@ public class Familia extends BaseActivity {
 
             int citas = Almacen.citasProximas(this, p.id);
             int analisis = Almacen.totalAnalisis(this, p.id);
-            ((TextView) v.findViewById(R.id.txtResumen)).setText(
-                    citas + (citas == 1 ? " cita próxima" : " citas próximas") + " · "
-                            + analisis + (analisis == 1 ? " análisis" : " análisis"));
+            ((TextView) v.findViewById(R.id.txtResumen)).setText(citas + (citas == 1 ? " cita próxima" : " citas próximas") + " · " + analisis + (analisis == 1 ? " análisis" : " análisis"));
 
             v.findViewById(R.id.btnEliminar).setOnClickListener(x ->
                     new MaterialAlertDialogBuilder(this)

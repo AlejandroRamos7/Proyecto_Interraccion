@@ -4,8 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
-/** Programa y cancela los recordatorios (alarma + notificación) de cada cita. */
 public final class Recordatorios {
     private Recordatorios() {}
 
@@ -21,7 +19,6 @@ public final class Recordatorios {
         if (disparo <= System.currentTimeMillis()) return;
         AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         if (am == null) return;
-        // Alarma inexacta que funciona en reposo (Doze) y no requiere permisos especiales.
         am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, disparo, intent(c, cita.id));
     }
 
@@ -33,7 +30,6 @@ public final class Recordatorios {
         pi.cancel();
     }
 
-    /** Reprograma todas las citas futuras (se usa tras reiniciar el teléfono). */
     public static void reprogramarTodas(Context c) {
         for (Almacen.Cita x : Almacen.citas(c)) programar(c, x);
     }
