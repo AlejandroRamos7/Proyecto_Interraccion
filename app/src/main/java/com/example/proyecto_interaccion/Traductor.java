@@ -136,7 +136,7 @@ public class Traductor extends BaseActivity {
 
         hilo.execute(() -> {
             try {
-                String bruto = ClaudeClient.traducir(texto, imagen, sencillo);
+                String bruto = IaClient.traducir(texto, imagen, sencillo);
                 JSONObject json = extraerJson(bruto);
                 runOnUiThread(() -> {
                     setCargando(false);
@@ -163,8 +163,8 @@ public class Traductor extends BaseActivity {
     }
 
     private void mostrarError(Exception e) {
-        String msg = ClaudeClient.ERROR_SIN_CLAVE.equals(e.getMessage())
-                ? "Falta la clave de API. Agrega ANTHROPIC_API_KEY en local.properties y vuelve a compilar la app."
+        String msg = IaClient.ERROR_SIN_CLAVE.equals(e.getMessage())
+                ? "Falta la clave de API. Agrega GEMINI_API_KEY en local.properties y vuelve a compilar la app."
                 : (e instanceof java.io.IOException
                     ? "No hay conexión a internet. Revisa tu red e intenta de nuevo."
                     : e.getMessage());

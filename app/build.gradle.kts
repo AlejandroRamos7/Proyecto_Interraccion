@@ -1,12 +1,12 @@
 import java.util.Properties
 
-// La clave de la API de Claude se lee de local.properties (archivo que NO se sube a Git).
+// La clave de la API de IA (Google Gemini) se lee de local.properties (archivo que NO se sube a Git).
 val localProps = Properties().apply {
     val f = rootProject.file("local.properties")
     if (f.exists()) f.inputStream().use { load(it) }
 }
-val anthropicKey: String = localProps.getProperty("ANTHROPIC_API_KEY", "")
-val anthropicModel: String = localProps.getProperty("ANTHROPIC_MODEL", "claude-sonnet-5-5")
+val geminiKey: String = localProps.getProperty("GEMINI_API_KEY", "")
+val geminiModel: String = localProps.getProperty("GEMINI_MODEL", "gemini-3.8-flash")
 
 plugins {
     alias(libs.plugins.android.application)
@@ -27,8 +27,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "ANTHROPIC_API_KEY", "\"$anthropicKey\"")
-        buildConfigField("String", "ANTHROPIC_MODEL", "\"$anthropicModel\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
+        buildConfigField("String", "GEMINI_MODEL", "\"$geminiModel\"")
     }
 
     buildFeatures {
